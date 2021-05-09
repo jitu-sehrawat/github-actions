@@ -45,7 +45,7 @@ jobs:
 
       - 
         name: Deploy to DigitalOcean Kubernetes
-        run: kubectl apply -f auth-depl.yaml
-      - 
-        name: Verify deployment
-        run: kubectl rollout status deployment/auth-dev
+        run: kubectl apply -f infra/dev
+      # - 
+      #   name: Verify deployment
+      #   run: kubectl rollout status deployment/auth-dev
