@@ -43,7 +43,7 @@ jobs:
 
       - 
         name: Deploy to DigitalOcean Kubernetes
-        run: kubectl apply -f infra/dev
+        run: cd infra/dev && kubectl apply -f auth-depl.yaml && kubectl apply -f auth-mongo-depl.yaml && kubectl apply -f ingress-srv.yaml 
 
       - 
         name: Verify deployment
