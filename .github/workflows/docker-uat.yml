@@ -1,9 +1,9 @@
-name: Docker Build Dev
+name: Docker Build Uat
 
 on:
   push:
     branches:
-      - 'dev'
+      - 'uat'
 
 jobs:
   docker:
@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/auth-dev:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/auth-uat:latest
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
