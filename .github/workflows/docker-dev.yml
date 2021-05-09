@@ -31,32 +31,31 @@ jobs:
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-      - 
-        name: Install doctl
-        uses: digitalocean/action-doctl@v2
+
+      - uses: Azure/k8s-set-context@v1
         with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-      - 
-        name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ticketing
-
-      -
-        name: Viewing fs
-        run: ls
+          kubeconfig: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - uses: Azure/k8s-deploy@v1.4
+        with:
+          namespace: 'default'
+          manifests: kubernetes/auth-depl.yaml
+          images: 'https://hub.docker.com/r/jitusehrawat/auth-dev'
+          kubectl-version: 'latest'
       
-      -
-        name: Viewing fs 1
-        run: ls
-      
-      -
-        name: Viewing fs 2
-        run: ls
+      # - 
+      #   name: Install doctl
+      #   uses: digitalocean/action-doctl@v2
+      #   with:
+      #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - 
-        name: Deploy to DigitalOcean Kubernetes
-        run: cd $GITHUB_WORKSPACE/infra/dev && kubectl apply -f auth-depl.yaml && kubectl apply -f auth-mongo-depl.yaml && kubectl apply -f ingress-srv.yaml 
+      # - 
+      #   name: Save DigitalOcean kubeconfig
+      #   run: doctl kubernetes cluster kubeconfig save ticketing
 
-      - 
-        name: Verify deployment
-        run: kubectl rollout status deployment/auth-dev
+      # - 
+      #   name: Deploy to DigitalOcean Kubernetes
+      #   run: cd $GITHUB_WORKSPACE/infra/dev && kubectl apply -f auth-depl.yaml && kubectl apply -f auth-mongo-depl.yaml && kubectl apply -f ingress-srv.yaml 
+
+      # - 
+      #   name: Verify deployment
+      #   run: kubectl rollout status deployment/auth-dev
