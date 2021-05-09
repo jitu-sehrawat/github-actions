@@ -41,6 +41,10 @@ jobs:
         name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save ticketing
 
+      -
+        name: Viewing fs
+        run: cd $GITHUB_WORKSPACE && ls
+
       - 
         name: Deploy to DigitalOcean Kubernetes
         run: cd infra/dev && kubectl apply -f auth-depl.yaml && kubectl apply -f auth-mongo-depl.yaml && kubectl apply -f ingress-srv.yaml 
