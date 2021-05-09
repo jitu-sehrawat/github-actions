@@ -43,7 +43,7 @@ jobs:
 
       - 
         name: Deploy to DigitalOcean Kubernetes
-        run: kubectl apply -f $GITHUB_WORKSPACE/infra/dev
+        run: kubectl apply -f infra/dev
 
       - 
         name: Verify deployment
