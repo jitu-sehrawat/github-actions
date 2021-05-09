@@ -43,9 +43,13 @@ jobs:
 
       -
         name: Viewing fs
-        run: ls      -
+        run: ls
+      
+      -
         name: Viewing fs 1
-        run: ls      -
+        run: ls
+      
+      -
         name: Viewing fs 2
         run: ls
 
