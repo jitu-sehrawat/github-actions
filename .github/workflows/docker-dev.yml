@@ -39,7 +39,7 @@ jobs:
 
       - 
         name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save do-blr1-ticketing
+        run: doctl kubernetes cluster kubeconfig save ticketing
 
       - 
         name: Deploy to DigitalOcean Kubernetes
