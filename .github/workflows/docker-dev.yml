@@ -1,4 +1,4 @@
-name: Docker Build Dev
+name: Build Push and Deploy dev
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - 'dev'
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
       -
@@ -31,3 +31,20 @@ jobs:
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+      - 
+        name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - 
+        name: Save DigitalOcean kubeconfig
+        run: doctl kubernetes cluster kubeconfig save do-blr1-ticketing
+
+      - 
+        name: Deploy to DigitalOcean Kubernetes
+        run: kubectl apply -f $GITHUB_WORKSPACE/infra/dev
+
+      - 
+        name: Verify deployment
+        run: kubectl rollout status deployment/auth-dev
