@@ -43,6 +43,7 @@ jobs:
         run: doctl kubernetes cluster kubeconfig save ticketing
 
       - 
+        uses: actions/checkout@v2
         name: Deploy to DigitalOcean Kubernetes
         run: kubectl apply -f auth-depl.yaml
       - 
